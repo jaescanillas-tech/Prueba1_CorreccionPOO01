@@ -6,11 +6,11 @@ public class CursoCertificado extends Curso implements ConDiploma {
     private boolean diploma;
     private int costo = 85000;
 
-    public CursoCertificado(String codigo, int duracion, int cupo, String entidadCertificadora, boolean evaluacionF) {
+    public CursoCertificado(String codigo, int duracion, int cupo, String entidadCertificadora, boolean evaluacionF,  boolean diploma) {
         super(codigo, duracion, cupo);
         this.entidadCertificadora = entidadCertificadora;
         this.evaluacionF = evaluacionF;
-        this.diploma = ConDiploma.tieneDiploma(codigo);
+        this.diploma = diploma;
     }
 
     public String getEntidadCertificadora() {
@@ -29,16 +29,31 @@ public class CursoCertificado extends Curso implements ConDiploma {
         this.evaluacionF = evaluacionF;
     }
 
-    @Override
-    public double CalCosto() {
-        double total = costo;
-        if (evaluacionF) {
-            return total;
-        }else{
-            total = total * 1.2;
-            return total;
-        }
+    public boolean isDiploma() {
+        return diploma;
     }
+
+    public void setDiploma(boolean diploma) {
+        this.diploma = diploma;
+    }
+
+    public int getCosto() {
+        return costo;
+    }
+
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
+
+    //correccion 1.2
+
+
+    @Override
+    public double calcularSalario() {
+        return 0;
+    }
+
+
 
     @Override
     public String Detalles() {
@@ -56,7 +71,7 @@ public class CursoCertificado extends Curso implements ConDiploma {
         }else{
             respuesta = respuesta + "Diploma emitido: No\n";
         }
-        respuesta = respuesta + "$" +(int)CalCosto() + "\n";
+        respuesta = respuesta + "$" +(int)calcularSalario() + "\n";
 
         return respuesta;
     }

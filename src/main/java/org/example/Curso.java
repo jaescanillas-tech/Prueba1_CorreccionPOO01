@@ -47,9 +47,8 @@ public abstract class Curso {
 
     // metodos extra de los setters y getters
 
-    public double CalCosto() {
-        return 0.0;
-    }
+    // correccion 1
+    public abstract double calcularSalario();
 
     public String Detalles() {
         return toString();

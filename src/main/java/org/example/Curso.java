@@ -6,27 +6,22 @@ public abstract class Curso {
     protected int cupo;
 
     public Curso(String codigo, int duracion, int cupo) {
-        if (codigo == null || codigo.length() == 0 || codigo == "") {
-            throw new IllegalArgumentException("El codigo no puede estar vacio");
-        }else{
-            this.codigo = codigo;
-        }if (duracion < 5 || duracion > 200) {
-            throw new IllegalArgumentException("La duracion no puede ser menor que 5 horas ni mayor a 200 horas");
-        }else {
-            this.duracion = duracion;
-        }if(cupo <= 0){
-            throw new IllegalArgumentException("La cupo no puede ser mayor que 0");
-        }else{
-            this.cupo = cupo;
-        }
+        setCodigo(codigo);
+        setDuracion(duracion);
+        setCupo(cupo);
     }
 
     public String getCodigo() {
         return codigo;
     }
 
+    // correccion en constructor con validaciones en los setters
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("El codigo no puede estar vacio");
+        } else {
+            this.codigo = codigo;
+        }
     }
 
     public int getDuracion() {
@@ -34,7 +29,11 @@ public abstract class Curso {
     }
 
     public void setDuracion(int duracion) {
-        this.duracion = duracion;
+        if  (duracion < 4 || duracion > 200) {
+            throw new IllegalArgumentException("La duracion del curso debe ser mayor de 4 horas y no puede superar las 200 horas");
+        } else {
+            this.duracion = duracion;
+        }
     }
 
     public int getCupo() {
@@ -42,15 +41,19 @@ public abstract class Curso {
     }
 
     public void setCupo(int cupo) {
-        this.cupo = cupo;
+        if (cupo <= 0){
+            throw new IllegalArgumentException("La cupo del curso debe ser mayor de 0");
+        }else {
+            this.cupo = cupo;
+        }
     }
 
     // metodos extra de los setters y getters
 
     // correccion 1
-    public abstract double calcularSalario();
+    public abstract double calCobro();
 
-    public String Detalles() {
+    public String detalles() {
         return toString();
     }
 

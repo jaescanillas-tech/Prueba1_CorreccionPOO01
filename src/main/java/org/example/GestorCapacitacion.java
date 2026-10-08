@@ -1,14 +1,13 @@
 package org.example;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.awt.image.CropImageFilter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GestorCapacitacion {
-    private List<Curso> cursos = new ArrayList<>();
+    private List<Curso> cursos;
 
     public GestorCapacitacion() {
+        this.cursos = new ArrayList<>();
     }
 
     public List<Curso> getCursos() {
@@ -19,18 +18,27 @@ public class GestorCapacitacion {
         this.cursos = cursos;
     }
 
-    public List<Curso> busqueda(String nombre) {
+    public void registrarCurso(Curso curso) {
+        if (curso == null) {
+            throw new IllegalArgumentException("El curso no puede ser nulo");
+        }
+
+        cursos.add(curso);
+        System.out.println(curso.getCodigo() + " registrado correctamente.");
+    }
+
+    public List<Curso> busqueda(String codigo) {
         List <Curso> lista = new ArrayList<>();
 
         for (Curso curso : cursos) {
-            if (curso.getCodigo() == nombre) {
+            if (curso.getCodigo().equals(codigo)) {
                 lista.add(curso);
             }
         }
         return lista;
     }
 
-    public String Lista() {
+    public String lista() {
         String respuesta = "";
 
         for  (Curso curso : cursos) {

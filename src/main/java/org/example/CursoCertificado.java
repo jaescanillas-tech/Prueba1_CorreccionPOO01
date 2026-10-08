@@ -4,13 +4,12 @@ public class CursoCertificado extends Curso implements ConDiploma {
     private String entidadCertificadora;
     private boolean evaluacionF;
     private boolean diploma;
-    private int costo = 85000;
 
-    public CursoCertificado(String codigo, int duracion, int cupo, String entidadCertificadora, boolean evaluacionF,  boolean diploma) {
+    public CursoCertificado(String codigo, int duracion, int cupo, String entidadCertificadora, boolean evaluacionF) {
         super(codigo, duracion, cupo);
-        this.entidadCertificadora = entidadCertificadora;
-        this.evaluacionF = evaluacionF;
-        this.diploma = diploma;
+        setEntidadCertificadora(entidadCertificadora);
+        setEvaluacionF(evaluacionF);
+        this.diploma = false;
     }
 
     public String getEntidadCertificadora() {
@@ -18,6 +17,9 @@ public class CursoCertificado extends Curso implements ConDiploma {
     }
 
     public void setEntidadCertificadora(String entidadCertificadora) {
+        if (entidadCertificadora == null || entidadCertificadora.isBlank()) {
+            throw new IllegalArgumentException("La entidad certificadora no puede ser nula");
+        }
         this.entidadCertificadora = entidadCertificadora;
     }
 
@@ -37,42 +39,25 @@ public class CursoCertificado extends Curso implements ConDiploma {
         this.diploma = diploma;
     }
 
-    public int getCosto() {
-        return costo;
-    }
-
-    public void setCosto(int costo) {
-        this.costo = costo;
-    }
-
     //correccion 1.2
 
-
     @Override
-    public double calcularSalario() {
-        return 0;
+    public double calCobro() {
+        int costo = 85000;
+        if  (evaluacionF) {
+            return costo;
+        }else{
+            return costo * 1.2;
+        }
     }
 
-
+    @Override
+    public boolean tieneDiploma(String codigo) {
+        return this.codigo.equals(codigo) && this.diploma;
+    }
 
     @Override
-    public String Detalles() {
-        String respuesta = super.toString();
-        respuesta = respuesta + "Cupos: " + getCupo() + "\n";
-        respuesta = respuesta + "Entidad certificadora : " + getEntidadCertificadora() + "\n";
-        if (evaluacionF) {
-            respuesta = respuesta + "Evaluacion al día: Si\n";
-        }else{
-            respuesta = respuesta + "Evaluacion al día: No\n";
-        }
-
-        if (diploma) {
-            respuesta = respuesta + "Diploma emitido: Si\n";
-        }else{
-            respuesta = respuesta + "Diploma emitido: No\n";
-        }
-        respuesta = respuesta + "$" +(int)calcularSalario() + "\n";
-
-        return respuesta;
+    public void DiplomaCurso() {
+        this.diploma = true;
     }
 }

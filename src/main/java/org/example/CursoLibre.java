@@ -2,11 +2,10 @@ package org.example;
 
 public class CursoLibre extends Curso{
     private int inscritos;
-    private int costo = 45000;
 
     public CursoLibre(String codigo, int duracion, int cupo, int inscritos) {
         super(codigo, duracion, cupo);
-        this.inscritos = inscritos;
+        setInscritos(inscritos);
     }
 
     public int getInscritos() {
@@ -14,27 +13,20 @@ public class CursoLibre extends Curso{
     }
 
     public void setInscritos(int inscritos) {
-        this.inscritos = inscritos;
-    }
-
-    @Override
-    public double CalCosto() {
-        double total = costo;
-        if (inscritos < 20) {
-            return total;
+        if  (inscritos < 0 ||  inscritos > getCupo()) {
+            throw new IllegalArgumentException("El valor inscrito no puede ser 0 y no puede superar los cupos maximos");
         }else{
-            total = total * 1.1;
-            return total;
+            this.inscritos = inscritos;
         }
     }
 
     @Override
-    public String Detalles() {
-        String respuesta = super.toString();
-        respuesta = respuesta + "Cupos: " + getCupo() + "\n";
-        respuesta = respuesta + "Inscritos: " + getInscritos() + "\n";
-        respuesta = respuesta + "Costo: " + (int)CalCosto() + "\n";
-
-        return respuesta;
+    public double calCobro() {
+        int costo = 45000;
+        if (inscritos > 20) {
+            return costo * 1.1;
+        }else{
+            return costo;
+        }
     }
 }

@@ -9,46 +9,40 @@ public class Main {
     public static void main(String[] args) {
         // variables y otros
         GestorCapacitacion gestor = new GestorCapacitacion();
-        List<Curso> cursos = gestor.getCursos();
 
-        gestor.setCursos(cursos);
+        CursoCertificado cursoC01 =
+                new CursoCertificado("CUR-C01", 40, 25, "SENCE", false);
+        CursoCertificado cursoC02 =
+                new CursoCertificado("CUR-C02", 60, 20, "CHILE VALORA", true);
+        CursoLibre cursoL01 =
+                new CursoLibre("CUR-L01", 20, 30, 25);
+        CursoLibre cursoL02 =
+                new CursoLibre("CUR-L02", 16, 15, 10);
 
-        // registro cursos
-        cursos.add(new CursoCertificado("CUR-C01", 40, 25, "SENCE", false));
-        cursos.add(new CursoCertificado("CUR-C02", 60, 20, "CHILE VALORA", true));
-        cursos.add(new CursoLibre("CUR-L01", 20, 30, 25));
-        cursos.add(new CursoLibre("CUR-L02", 16, 15, 10));
+        cursoC01.DiplomaCurso();
 
-        for (Curso curso : cursos) {
-            System.out.println(curso.codigo + " (" + curso.getClass().getSimpleName() + ") registrado correctamente.");
-        }
+        gestor.registrarCurso(cursoC01);
+        gestor.registrarCurso(cursoC02);
+        gestor.registrarCurso(cursoL01);
+        gestor.registrarCurso(cursoL02);
 
         // busqueda por codigo
-
-        Busqueda(gestor, "CUR-C01");
-
+        busqueda(gestor, "CUR-C01");
 
         // Lista
         System.out.println("\n=== Lista ===");
-        System.out.println(gestor.Lista());
+        System.out.println(gestor.lista());
 
     }
 
     // metodos auxiliares
-    public static void Busqueda(GestorCapacitacion gestor, String nombre) {
-        List<Curso> busqueda = gestor.busqueda(nombre);
+    public static void busqueda(GestorCapacitacion gestor, String codigo) {
+        List<Curso> busqueda = gestor.busqueda(codigo);
 
-        System.out.println(" \n=== Busqueda por codigo: " + nombre + " ===");
+        System.out.println(" \n=== Busqueda por codigo: " + codigo + " ===");
         for (Curso curso : busqueda) {
-            if(curso.getClass().getSimpleName().equals("CursoLibre")) {
-                System.out.println("Tipo: Curso Libre");
-            }else if(curso.getClass().getSimpleName().equals("CursoCertificado")) {
-                System.out.println("Tipo: Curso Certificado");
-            }
-            System.out.println(curso.Detalles());
+            System.out.println(curso.detalles());
+            System.out.println("Costo: $" + (int) curso.calCobro());
         }
-
-
-
     }
 }
